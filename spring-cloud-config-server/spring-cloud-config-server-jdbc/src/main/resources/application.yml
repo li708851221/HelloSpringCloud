@@ -1,0 +1,41 @@
+server:
+  port: 8005
+spring:
+  profiles:
+    active: jdbc
+  application:
+    name: spring-cloud-config-server
+  datasource:
+    url: jdbc:mysql://129.28.180.150:3306/config-jdbc?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true
+    username: root
+    password: admin
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    config:
+      label: master
+      server:
+        jdbc: true
+  rabbitmq:
+    host: 129.28.180.150
+    port: 5672
+    username: admin
+    password: admin
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details:  "ALWAYS"
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/,http://localhost:8001/eureka/
+logging:
+  file: /data/logs/crm/${spring.application.name}.log
+
+spring.cloud.config.server.jdbc.sql: SELECT key1, value1 from config_properties where APPLICATION=? and PROFILE=? and LABEL=?
+
+#https://github.com/li708851221/HelloSpringCloud/tree/master/spring-cloud-config-repo
+#curl -X POST http://localhost:8005/actuator/bus-refresh

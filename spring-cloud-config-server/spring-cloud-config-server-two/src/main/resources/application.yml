@@ -1,0 +1,34 @@
+server:
+  port: 8006
+spring:
+  application:
+    name: spring-cloud-config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/li708851221/HelloSpringCloud/
+          search-paths: spring-cloud-config-repo
+          username: yourusername                                  # git�ֿ���˺�
+          password: yourpassword                                 # git�ֿ������
+          force-pull: true
+  rabbitmq:
+    host: 129.28.180.150
+    port: 5672
+    username: admin
+    password: admin
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details:  "ALWAYS"
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/,http://localhost:8001/eureka/
+
+#https://github.com/li708851221/HelloSpringCloud/tree/master/spring-cloud-config-repo
+#curl -X POST http://localhost:8005/actuator/bus-refresh
